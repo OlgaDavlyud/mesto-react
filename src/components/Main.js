@@ -29,7 +29,7 @@ function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
                     }))
                 );
             });
-        }, [cards])
+        }, [])
 
     return (
         <main className="content">

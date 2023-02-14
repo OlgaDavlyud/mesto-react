@@ -12,7 +12,7 @@ function PopupWithConfirmation({title, name, buttonText, onClose}) {
                     onClick={onClose}
                 ></button>
                 <h2 className={`popup__title-${name}`}>{title}</h2>
-                <form className="popup__form" name={`popup-form-${name}`} noValidate="">
+                <form className="popup__form" name={`popup-form-${name}`}>
                     <button
                     className="popup__button-submit"
                     type="submit"
