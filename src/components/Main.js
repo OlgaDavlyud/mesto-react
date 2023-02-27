@@ -65,12 +65,12 @@ function Main({cards, onEditProfile, onAddPlace, onEditAvatar, onCardClick, onCa
             <section>
                 <ul className="elements">
                     {
-                        cards.map(({ _id, ...props }) => (
+                        cards.map((card) => (
                         <Card
-                        key={_id} {...props}
-                        id={_id}
-                        onCardClick={onCardClick}
-                        onCardLike={onCardLike}
+                            key={card._id}
+                            card={card}
+                            onCardClick={onCardClick}
+                            onCardLike={onCardLike}
                         />
                     ))}
                 </ul>
