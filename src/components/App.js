@@ -1,17 +1,35 @@
 import React from 'react';
 import '../index.css';
+import api from '../utils/Api.js';
 import Header from './Header.js';
 import Footer from './Footer.js';
 import Main from './Main.js';
 import PopupWithForm from './PopupWithForm.js';
 import ImagePopup from './ImagePopup.js';
 import PopupWithConfirmation from './PopupWithConfirmation.js';
+import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState({name: '', link: ''});
+  const [currentUser, setCurrentUser] = React.useState({});
+  const [cards, setCards] = React.useState([]);
+
+  React.useEffect(() => {
+    api.getInitialUserData(currentUser)
+    .then(data => {
+      setCurrentUser(data);
+  })
+  }, [])
+
+  React.useEffect(() => {
+    api.getInitialCards()
+    .then((dataCard) => {
+        setCards(dataCard)
+        });
+    }, [])
 
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(!isEditProfilePopupOpen);
@@ -32,14 +50,27 @@ function App() {
     setSelectedCard({name: '', link: ''});
   }
 
+  function handleCardLike(card) {
+    console.log(card);
+    // Снова проверяем, есть ли уже лайк на этой карточке
+    const isLiked = card.likes.some(i => i._id === currentUser._id);
+    // Отправляем запрос в API и получаем обновлённые данные карточки
+    api.setLike(card._id, !isLiked).then((newCard) => {
+        setCards((state) => state.map((c) => c.id === card._id ? newCard : c));
+    });
+}
+
   return (
+    <CurrentUserContext.Provider value={currentUser}>
   <div className="page">
     <Header />
     <Main
+    cards={cards}
     onEditProfile={handleEditProfileClick}
     onAddPlace={handleAddPlaceClick}
     onEditAvatar={handleEditAvatarClick}
     onCardClick={setSelectedCard}
+    onCardLike={handleCardLike}
     />
     <Footer />
     {/*Попап редактирования данных*/}
@@ -147,6 +178,7 @@ function App() {
     onClose={closeAllPopups}
     />
   </div>
+  </CurrentUserContext.Provider>
   );
 }
 
