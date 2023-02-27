@@ -1,10 +1,10 @@
 import React from 'react';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 
-// function Card({name, link, likes, onCardClick, owner, onCardLike}) {
-function Card({card, onCardClick, onCardLike}) {
-    const { name, link, likes, owner } = card
+function Card({card, onCardClick, onCardLike, onCardDelete}) {
     const currentUser = React.useContext(CurrentUserContext);
+
+    const { name, link, likes, owner } = card
 
     const isOwn = owner._id === currentUser._id;
 
@@ -13,21 +13,20 @@ function Card({card, onCardClick, onCardLike}) {
         `element__like-button ${isLiked && 'element__like-button-active'}`
      );
 
-    const handleCardClick = (data) => {
-        onCardClick({ link, name });
+    const handleCardClick = () => {
+        onCardClick(card);
     }
 
     const handleLikeClick = () => {
         onCardLike(card);
     }
 
-
     const handleDeleteClick = () => {
-        console.log('handleDeleteClick');
+        onCardDelete(card._id);
     }
 
     return(
-        <li className="element">
+        <li className="element" id={card.id}>
             <img className="element__image" src={`${link}`} alt={name} onClick={handleCardClick}/>
             {isOwn && <button className="element__trash-button" type="button" onClick={handleDeleteClick}></button>}
             <div className="element__card">

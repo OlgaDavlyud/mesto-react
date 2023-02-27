@@ -66,19 +66,10 @@ class Api {
         .then(this._checkReponse);
     }
 
-    // Запрос установки лайка
-    setLike(id) {
-        return fetch (`${this._baseUrl}/cards/likes/${id}`, {
-            method: 'PUT',
-            headers: this._headers,
-        })
-        .then(this._checkReponse);
-    }
-
-    // Запрос снятия лайка
-    deleteLike(id) {
-        return fetch (`${this._baseUrl}/cards/likes/${id}`, {
-            method: 'DELETE',
+    // Запрос установки и снятия лайка
+    changeLikeCardStatus(id, isLiked) {
+        return fetch (`${this._baseUrl}/cards/${id}/likes`, {
+            method: isLiked ? "PUT" : "DELETE",
             headers: this._headers,
         })
         .then(this._checkReponse);

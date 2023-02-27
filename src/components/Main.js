@@ -1,38 +1,9 @@
 import React from 'react';
-import api from '../utils/Api.js';
 import Card from './Card.js';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 
-function Main({cards, onEditProfile, onAddPlace, onEditAvatar, onCardClick, onCardLike}) {
+function Main({cards, onEditProfile, onAddPlace, onEditAvatar, onCardClick, onCardLike, onCardDelete}) {
     const currentUser = React.useContext(CurrentUserContext);
-
-    // const [cards, setCards] = React.useState([]);
-
-    // React.useEffect(() => {
-    //     api.getInitialCards()
-    //     .then((dataCard) => {
-    //         setCards(dataCard)
-    //         //     data.map((item) => ({
-    //         //         id: item._id,
-    //         //         link: item.link,
-    //         //         alt: item.name,
-    //         //         likes: item.likes,
-    //         //         name: item.name,
-    //         //         owner: item.owner
-    //         //         }))
-    //         //     );
-    //         });
-    //     }, [])
-
-    // function handleCardLike(card) {
-    //     // Снова проверяем, есть ли уже лайк на этой карточке
-    //     const isLiked = card.likes.some(i => i._id === currentUser._id);
-
-    //     // Отправляем запрос в API и получаем обновлённые данные карточки
-    //     api.setLike(card._id, !isLiked).then((newCard) => {
-    //         setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
-    //     });
-    // }
 
     return (
         <main className="content">
@@ -71,6 +42,7 @@ function Main({cards, onEditProfile, onAddPlace, onEditAvatar, onCardClick, onCa
                             card={card}
                             onCardClick={onCardClick}
                             onCardLike={onCardLike}
+                            onCardDelete={onCardDelete}
                         />
                     ))}
                 </ul>
