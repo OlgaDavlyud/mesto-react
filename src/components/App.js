@@ -95,9 +95,9 @@ function App() {
   }
 
   function handleUpdateAvatar(data){
-    api.setNewAvatar(data)
+    api.setNewAvatar(data.avatar)
     .then((data) => {
-      setCurrentUser(data);
+      setCurrentUser(data)
     })
     .then(() => {
       closeAllPopups();
@@ -112,6 +112,12 @@ function App() {
     .then((newCard) => {
       setCards([newCard, ...cards]);
     })
+    .then(() => {
+      closeAllPopups();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   }
 
   return (

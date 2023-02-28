@@ -5,7 +5,7 @@ class Api {
     }
 
     // Метод проверки
-    _checkReponse(res) {
+    _checkResponse(res) {
         if(res.ok) {
             return res.json();
         }
@@ -19,7 +19,7 @@ class Api {
             method: 'GET',
             headers: this._headers
         })
-        .then(this._checkReponse);
+        .then(this._checkResponse);
     }
 
     // Запрос получения карточек с сервера
@@ -28,7 +28,7 @@ class Api {
             method: 'GET',
             headers: this._headers
         })
-        .then(this._checkReponse);
+        .then(this._checkResponse);
     }
 
     // Запрос изменения данных пользователя
@@ -41,7 +41,7 @@ class Api {
               about: data.about,
             })
         })
-        .then(this._checkReponse);
+        .then(this._checkResponse);
     }
 
     // Запрос добавления карточки
@@ -54,7 +54,7 @@ class Api {
                 link: data.link,
             })
         })
-        .then(this._checkReponse);
+        .then(this._checkResponse);
     }
 
     // Запрос удаления карточки
@@ -63,7 +63,7 @@ class Api {
             method: 'DELETE',
             headers: this._headers,
         })
-        .then(this._checkReponse);
+        .then(this._checkResponse);
     }
 
     // Запрос установки и снятия лайка
@@ -72,18 +72,19 @@ class Api {
             method: isLiked ? "PUT" : "DELETE",
             headers: this._headers,
         })
-        .then(this._checkReponse);
+        .then(this._checkResponse);
     }
 
     // Запрос обновления аватара
-    setNewAvatar(data) {
+    setNewAvatar(avatar) {
         return fetch (`${this._baseUrl}/users/me/avatar`, {
             method: 'PATCH',
             headers: this._headers,
             body: JSON.stringify({
-                avatar: data.avatar
+                avatar: avatar
             })
         })
+        .then(this._checkResponse);
     }
 }
 

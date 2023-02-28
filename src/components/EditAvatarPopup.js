@@ -1,20 +1,19 @@
 import React from 'react';
 import PopupWithForm from './PopupWithForm.js';
-import { useRef } from "react";
 
 
 function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
-  const avatarInput = useRef();
+  const avatarInputref = React.useRef();
 
   React.useEffect(() => {
-      avatarInput.current.value = "";
-  }, []);
+    avatarInputref.current.value = "";
+  }, [isOpen]);
 
   function handleSubmit(evt) {
       evt.preventDefault();
 
       onUpdateAvatar({
-        avatar: avatarInput.current.value
+        avatar: avatarInputref.current.value,
       });
   }
 
@@ -29,14 +28,13 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
       >
         <label className="popup__form-field">
           <input
+            ref={avatarInputref}
             className="popup__input popup__input-update-avatar"
             type="url"
             name="avatar"
             id="avatar"
             placeholder="Ссылка на аватар"
-            defaultValue=""
             required=""
-            ref={avatarInput}
           />
           <span className="popup__error-visible avatar-error-visible" />
         </label>
